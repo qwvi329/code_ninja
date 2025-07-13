@@ -36,7 +36,12 @@ def game():
 
        #convert str to int
        move = int(move) -1
-
+       
+       if list_board[move] != 'X' and list_board[move] != 'O':
+          print()
+       else:
+         print("That cell is already filled.\nKey in another move?")
+         continue         
        #update player's move on the list
        list_board[move] = cur_player
 
