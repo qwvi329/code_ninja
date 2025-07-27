@@ -35,12 +35,12 @@ def check_winner(board):
         a, b, c = combo
         if board[a] == board[b] == board[c] and board[a] != " ":
             return board[a] # Returns "X" or "O"
-    if " " not in board:
-        return "draw"
+    #if " " not in board:
+        #return "draw"
     return None # game is still ongoing
 
          
-   
+
       
 # to be continued
 
@@ -52,7 +52,7 @@ def game():
    count = 1
 
     #repeat 11 - 1 = 10 times because that's the max number of moves a game can have (3x3=9)
-   while count < 11:
+   #while count < 11:
       # draw_board_list(list_board)
 
       # #get current player's input
@@ -64,43 +64,80 @@ def game():
       #    #convert str to int
       # move = int(move) -1
 
-      while True:
-         draw_board_list(list_board)
-         player_input = input("Enter a number strictly between 1 and 9: ")
-         if player_input.isdigit():
-             player_input_int = int(player_input) 
-             if 1 < player_input_int < 9:
-                  print("Valid Input:", player_input_int)
-                  
-             else:
-                  print("Input must be strictly between 1 and 9. Try again.")
-                  continue
-         else:
-             print("Invalid input.Please enter a number.")
-             continue
+   while True:
+      draw_board_list(list_board)
+      player_input = input("Enter a number strictly between 1 and 9: ")
+      if player_input.isdigit():
+            player_input_int = int(player_input) 
+            if 0 < player_input_int < 10:
+               print("Valid Input:", player_input_int)
+               
+            else:
+               print("Input must be strictly between 1 and 9. Try again.")
+               continue
+      else:
+            print("Invalid input.Please enter a number.")
+            continue
 
-         move = player_input_int-1
-         if list_board[move] != 'X' and list_board[move] != 'O':
-            print()
-         else:
-            print("That cell is already filled.\nKey in another move?")
-            continue       
-         
-         #update player's move on the list
-         list_board[move] = cur_player
-
-         #switch the current player
-         if  cur_player =='X':
-            cur_player = 'O'
-         else:
-            cur_player = 'X'
-
+      move = player_input_int-1
+      if list_board[move] != 'X' and list_board[move] != 'O':
+         print()
+      else:
+         print("That cell is already filled.\nKey in another move?")
+         continue       
       
+      #update player's move on the list
+      list_board[move] = cur_player
 
-         if check_winner(list_board):
-             print("winner???")
+      count = count + 1
+      if count > 9:
+         print("======Draw=====")
+         break
 
-         count = count + 1
+      if check_winner(list_board):
+         print("winner??? is " + cur_player)
+         return cur_player
 
+      #switch the current player
+      if  cur_player =='X':
+         cur_player = 'O'
+      else:
+         cur_player = 'X'
+
+
+# Function to print the score-board
+def print_scoreboard(score_board):
+    print("________________________________")
+    print("          SCOREBOARD          ") 
+    print("________________________________")
+
+    players = list(score_board.keys())
+    print("   ",players[0],"   ", score_board[players[0]])
+    print("   ",players[1],"   ", score_board[players[1]])
+
+    print("_______________________________")
+
+
+    
 #main
-game()
+def main():
+   player1 = input("Player 1's name: ")
+   player2 = input("Player 2's name:")
+   score_board = {player1: 0, player2: 0}
+
+   while True:
+      print_scoreboard(score_board)
+      winner = game()
+      if winner == 'X':
+         score_board[player1] = score_board[player1] + 1
+      if winner == 'O':
+         score_board=[player2] = score_board[player2] + 1
+      replay = input("Play again? (y/n): ")
+      if replay.lower() == 'y':
+         continue
+      else:
+         print("gameover")
+         break
+
+
+main()
