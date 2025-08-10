@@ -1,0 +1,84 @@
+import random
+import time
+
+
+def generate_sequence(length):
+    sequence = []
+    for _ in range(length):
+     sequence.append(random.choice("ABCDEFGHIJKLMNOPQRSTUVWSYZ0123456789"))
+    return sequence
+
+
+# Test your function
+# print(generate_sequence(10))
+
+def show_sequence(sequence):
+    print("Remember this sequence:")
+    print(" ".join(sequence))
+    time.sleep(3) # Wait for 3 seconds
+    print("\033c", end="")
+
+def get_player_input():
+    return (input("enter the sequence: ").split())
+
+# Test your function
+# print(get_player_input())
+
+def check_answer(player_input, correct_sequence):
+    # print (player_input)
+    # print (correct_sequence)
+    # print (player_input == correct_sequence)
+    return player_input == correct_sequence
+
+# Test your function
+# print(check_answer(["A","B","C"], ["A","B","C"])) # True
+# print(check_answer(["A","B","C"], ["A","B","D"])) # False
+
+def play_game():
+    sequence_length = 3
+    score = 0
+    player_input = []
+
+    while True:
+        # Generate and show the sequence
+        sequence = generate_sequence(sequence_length)
+        show_sequence(sequence)
+
+        # Get the player's input
+        player_input = list(get_player_input()[0])
+
+        # Check the answer
+        if check_answer(player_input, sequence):
+           print("Correct!")
+           score += 1
+           sequence_length += 1 # Increase difficulty
+        else:
+            print("Wrong! Game Over!")
+            break
+
+        print("Your final score:", score)
+
+
+def countdown(seconds):
+    print(f"You have {seconds} seconds to memorize the sequence!")
+    while seconds:
+        print(f"{seconds}...", end=' ', flush=True)
+        time.sleep(1)
+        seconds -= 1
+    print("\nTime's up!")
+
+# Example usage
+# sequence = ["H", "2", "O"]
+# print("Memorize this seqeunce:")
+# print(", ".join(sequence))
+# countdown(10)
+
+# # Clear screen or hide sequence here (optional)
+# input("Now type the sequence from memory: ")
+
+ 
+
+
+# Start the game
+play_game()
+        
